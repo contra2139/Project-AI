@@ -1,0 +1,29 @@
+# General
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+.vscode/
+.idea/
+
+# Environment variables
+.env
+
+# Virtual Environment
+venv/
+env/
+
+# Google Credentials
+credentials.json
+service_account.json
+token.json
+token_sheets.json
+client_secret.json
+
+# Exported Data
+exports/
+
+# Build
+dist/
+build/
+*.spec

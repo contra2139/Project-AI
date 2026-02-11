@@ -1,0 +1,7 @@
+- **Dashboard trực quan**: Hiển thị realtime số view hiện tại, top comment mới nhất, top người tặng quà.
+- **Alert âm thanh/Visual**: Khi có đơn hàng, donation lớn, hoặc từ khóa quan trọng (VD: "giá bao nhiêu", "chốt đơn").
+- **Auto-Reply (Cân nhắc)**: Tự động trả lời comment theo kịch bản (VD: user hỏi giá -> chat bot trả lời giá). *Lưu ý: TikTok/FB có thể chặn nếu spam.*
+- **Minigame/Giveaway**: Quay số ngẫu nhiên từ danh sách comment để tặng quà.
+- **Phân loại khách hàng**: Tự động gắn tag "Khách mới", "Fan cứng", "Khách hay bom hàng" dựa trên lịch sử dữ liệu cũ.
+- **Xuất file Excel/CSV**: Ngoài Google Sheet, cho phép lưu file offline.
+- **Biểu đồ biến động**: Vẽ đồ thị lượng view/comment theo thời gian thực để biết lúc nào tương tác cao nhất.
