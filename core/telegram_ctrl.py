@@ -70,6 +70,7 @@ from config import config
 from core.data_ingestion import get_multi_timeframe_data
 from core.ta_calculator import calculate_ta
 from core.ai_brain import generate_trading_decision
+from core.binance_exec import execute_trade, execute_conditional_order
 import logging
 
 logger = logging.getLogger(__name__)
@@ -130,12 +131,33 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text(f"⚠️ Đã có lỗi xảy ra trong quá trình AI phân tích. Kiểm tra log Hệ thống.")
         
     elif action["type"] == "immediate_order":
-        await update.message.reply_text(f"⚡ Đã ghi nhận lệnh tức thì:\n• Action: {action['action']}\n• Price: {action['price']}\n• TP: {action['tp']}\n• SL: {action['sl']}")
-        # TODO: Chuyển tiếp tới binance_exec
-        
+        await update.message.reply_text(f"⏳ Đang xử lý lệnh tức thì {action['action']} tại {action['price']}...")
+        result = await execute_trade(
+            symbol="BTCUSDT", # Tạm hardcode hoặc cần bắt user nhập Ticker chung lệnh
+            action=action['action'],
+            price=action['price'],
+            sl=action['sl'],
+            tp=action['tp']
+        )
+        if result["status"] == "success":
+            await update.message.reply_text(f"✅ KHỚP LỆNH THÀNH CÔNG!\nID: `{result['order']['orderId']}`", parse_mode='Markdown')
+        else:
+            await update.message.reply_text(f"❌ LỖI VÀO LỆNH: {result['message']}")
+            
     elif action["type"] == "conditional_order":
-        await update.message.reply_text(f"⏳ Đã ghi nhận lệnh điều kiện:\n• Căn giá chạm: {action['condition_price']}\n• Action: {action['action']}\n• Price limit: {action['price']}")
-        # TODO: Chuyển tiếp cấu hình lệnh Stop-Limit trên binance_exec
+        await update.message.reply_text(f"⏳ Đang thiết lập bẫy giá {action['condition_price']}...")
+        result = await execute_conditional_order(
+            symbol="BTCUSDT",
+            action=action['action'],
+            trigger_price=action['condition_price'],
+            entry_price=action['price'],
+            sl=action['sl'],
+            tp=action['tp']
+        )
+        if result["status"] == "success":
+            await update.message.reply_text(f"✅ GÀI BẪY THÀNH CÔNG!\nKhi giá chạm {action['condition_price']} sẽ kích hoạt.\nID: `{result['order']['orderId']}`", parse_mode='Markdown')
+        else:
+            await update.message.reply_text(f"❌ LỖI CÀI BẪY: {result['message']}")
         
     else:
         await update.message.reply_text("❌ Cú pháp không hợp lệ. Vui lòng gửi:\n- Ticker (VD: BTCUSDT)\n- Lệnh: 'Long/Short price x TP/SL y/z'\n- Điều kiện: 'if w Long/Short price x TP/SL y/z'")
