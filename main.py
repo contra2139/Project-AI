@@ -25,11 +25,14 @@ try:
 except RuntimeError:
     logger.warning("Thư mục web/static chưa sẵn sàng.")
 
+from core.telegram_ctrl import start_telegram_bot
+
 @app.on_event("startup")
 async def startup_event():
-    logger.info("Khởi động hệ thống FastAPI...")
+    logger.info("⚡ Khởi động hệ thống FastAPI + Telegram Bot...")
     config.validate()
-    # TODO: Khởi động Telegram Polling Background Task ở đây
+    # Khởi động Telegram Polling Background Task
+    asyncio.create_task(start_telegram_bot())
     
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
