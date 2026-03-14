@@ -43,6 +43,30 @@ async def read_root():
     except FileNotFoundError:
         return "<h1>Dashboard đang được xây dựng...</h1>"
 
+@app.get("/api/chart/{symbol}")
+async def get_chart_data(symbol: str, interval: str = "1h", limit: int = 150):
+    """Trích xuất dữ liệu OHLCV trực tiếp từ Binance dùng để render Graphic Chart"""
+    from core.data_ingestion import fetch_klines
+    try:
+        df = await fetch_klines(symbol=symbol, interval=interval, limit=limit)
+        if df is None or df.empty:
+            return JSONResponse(content=[])
+            
+        chart_data = []
+        for index, row in df.iterrows():
+            # Chuyển đổi pandas DateTimeIndex thành UNIX timestamp seconds
+            chart_data.append({
+                "time": int(index.timestamp()),
+                "open": row["open"],
+                "high": row["high"],
+                "low": row["low"],
+                "close": row["close"]
+            })
+        return JSONResponse(content=chart_data)
+    except Exception as e:
+        logger.error(f"Lỗi khi kéo chart {symbol}: {e}")
+        return JSONResponse(content=[])
+
 @app.get("/api/logs", response_class=JSONResponse)
 async def get_logs(lines: int = 50):
     """Lấy N dòng log cuối cùng từ app_info.log"""

@@ -41,7 +41,7 @@
         <div class="lg:col-span-2 space-y-6">
             <div class="bg-panel rounded-lg p-4 border border-gray-800 min-h-[500px]">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-lg font-semibold flex items-center">
+                    <h2 id="chart-title" class="text-lg font-semibold flex items-center">
                         BTCUSDT <span class="bg-gray-800 text-xs px-2 py-1 rounded ml-2">Perpetual</span>
                     </h2>
                     <div class="flex space-x-2">
@@ -104,11 +104,26 @@
             wickUpColor: '#0ECB81', wickDownColor: '#F6465D'
         });
         
-        // Mẫu dữ liệu (Sau này API sẽ đổ vào đây)
-        const data = [
-            { time: '2026-03-14', open: 65000, high: 66000, low: 64000, close: 65500 },
-        ];
-        candleSeries.setData(data);
+        // Trạng thái theo dõi hiện tại
+        let currentSymbol = "BTCUSDT";
+        let isChartLoading = false;
+
+        async function fetchChart(symbol) {
+            if (isChartLoading) return;
+            isChartLoading = true;
+            try {
+                const response = await fetch(`/api/chart/${symbol}?interval=1h`);
+                const data = await response.json();
+                if (data && data.length > 0) {
+                    document.getElementById('chart-title').innerHTML = `${symbol} <span class="bg-gray-800 text-xs px-2 py-1 rounded ml-2">1H</span>`;
+                    candleSeries.setData(data);
+                }
+            } catch (error) {
+                console.error("Lỗi vẽ hình:", error);
+            } finally {
+                isChartLoading = false;
+            }
+        }
 
         // ==== FETCH LOGS API ====
         async function fetchLogs() {
@@ -119,11 +134,19 @@
                 const logContainer = document.getElementById('log-container');
                 logContainer.innerHTML = '';
                 
+                let detectedSymbol = currentSymbol;
+
                 if (result.logs && result.logs.length > 0) {
                     result.logs.forEach(line => {
                         const div = document.createElement('div');
                         div.className = 'whitespace-pre-wrap break-words border-b border-gray-800/50 pb-1';
                         
+                        // Quét mã Token từ Log (Lấy log mới nhất đầu tiên vì đảo ngược)
+                        const tokenMatch = line.match(/Token:\s*([A-Z0-9]+)/);
+                        if (tokenMatch && tokenMatch[1]) {
+                            detectedSymbol = tokenMatch[1];
+                        }
+
                         // Highlight lỗi
                         if (line.includes('ERROR') || line.includes('WARNING')) {
                             div.classList.add('text-red-400');
@@ -137,12 +160,19 @@
                 } else {
                     logContainer.innerHTML = '<div>System ready. Waiting for logs...</div>';
                 }
+                
+                // Nếu User gọi quét Token mới -> Vẽ lại bảng Nến
+                if (detectedSymbol !== currentSymbol) {
+                    currentSymbol = detectedSymbol;
+                    fetchChart(currentSymbol);
+                }
             } catch (error) {
                 console.error('Error fetching logs:', error);
             }
         }
         
-        // Auto Update mỗi 3 giây
+        // Khởi động
+        fetchChart(currentSymbol);
         fetchLogs();
         setInterval(fetchLogs, 3000);
     </script>
