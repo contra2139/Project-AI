@@ -38,19 +38,28 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Chart Column -->
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-2 space-y-6">
             <div class="bg-panel rounded-lg p-4 border border-gray-800 min-h-[500px]">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold flex items-center">
                         BTCUSDT <span class="bg-gray-800 text-xs px-2 py-1 rounded ml-2">Perpetual</span>
                     </h2>
                     <div class="flex space-x-2">
-                        <button class="px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded text-sm transition">15m</button>
-                        <button class="px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded text-sm transition">1H</button>
-                        <button class="px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded text-sm transition text-binance">4H</button>
+                        <button class="px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded text-sm transition text-binance">15m / 1H / 4H</button>
                     </div>
                 </div>
                 <div id="tvchart" class="w-full h-[400px]"></div>
+            </div>
+            
+            <!-- Live Logs Terminal -->
+            <div class="bg-panel rounded-lg p-4 border border-gray-800">
+                <h2 class="text-lg font-semibold mb-4 border-b border-gray-800 pb-2 flex items-center">
+                    <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+                    Terminal: System Execution Logs
+                </h2>
+                <div id="log-container" class="space-y-1 text-xs font-mono h-[300px] overflow-y-auto bg-black p-4 rounded text-gray-300">
+                    <div>[System] Đang chờ kết nối Backend...</div>
+                </div>
             </div>
         </div>
 
@@ -58,23 +67,9 @@
         <div class="space-y-6">
             <!-- AI Confluence Box -->
             <div class="bg-panel rounded-lg p-4 border border-gray-800">
-                <h2 class="text-lg font-semibold mb-4 border-b border-gray-800 pb-2">🧠 AI Brain Decisions</h2>
+                <h2 class="text-lg font-semibold mb-4 border-b border-gray-800 pb-2">🧠 AI Brain Dashboard</h2>
                 <div class="space-y-3">
-                    <div class="p-3 bg-gray-800 rounded">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="text-xs font-mono text-gray-400">14:05 PM</span>
-                            <span class="text-xs font-bold text-buy bg-green-900/30 px-2 py-1 rounded">LONG</span>
-                        </div>
-                        <p class="text-sm">Mô hình cờ đuôi nheo (Bull Flag) khung 1H + RSI oversold khung 15m. Xu hướng chính 4H vẫn tăng.</p>
-                    </div>
-                    
-                    <div class="p-3 bg-gray-800 rounded">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="text-xs font-mono text-gray-400">10:15 AM</span>
-                            <span class="text-xs font-bold text-gray-400 bg-gray-700 px-2 py-1 rounded">STAND BY</span>
-                        </div>
-                        <p class="text-sm">Thị trường Sideway tích lũy. VWAP đang phẳng, chờ breakout rõ ràng.</p>
-                    </div>
+                    <p class="text-sm text-gray-400">Các Tín hiệu AI và Cảnh báo sẽ được tự động ghi đè xuống Terminal bên trái ngay khi có luồng tín hiệu Mới từ Telegram.</p>
                 </div>
             </div>
 
@@ -83,18 +78,14 @@
                 <h2 class="text-lg font-semibold mb-4 border-b border-gray-800 pb-2">📋 Lệnh Chờ (Conditional)</h2>
                 <ul class="space-y-2 text-sm">
                     <li class="flex justify-between items-center p-2 hover:bg-gray-800 rounded">
-                        <span><span class="text-buy font-bold mr-1">L</span> BNBUSDC</span>
-                        <div class="text-right">
-                            <div class="text-gray-300">IF <span class="text-white">480</span></div>
-                            <div class="text-xs text-gray-500">Entry: 490</div>
-                        </div>
+                        <span class="text-gray-500 italic">Tính năng Sync Lệnh Chờ đang hoàn thiện...</span>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <!-- Script tạo biểu đồ mẫu -->
+    <!-- Script tạo biểu đồ mẫu và API Load -->
     <script>
         const chartOptions = {
             layout: { textColor: '#d1d4dc', background: { type: 'solid', color: '#181A20' } },
@@ -118,6 +109,42 @@
             { time: '2026-03-14', open: 65000, high: 66000, low: 64000, close: 65500 },
         ];
         candleSeries.setData(data);
+
+        // ==== FETCH LOGS API ====
+        async function fetchLogs() {
+            try {
+                const response = await fetch('/api/logs');
+                const result = await response.json();
+                
+                const logContainer = document.getElementById('log-container');
+                logContainer.innerHTML = '';
+                
+                if (result.logs && result.logs.length > 0) {
+                    result.logs.forEach(line => {
+                        const div = document.createElement('div');
+                        div.className = 'whitespace-pre-wrap break-words border-b border-gray-800/50 pb-1';
+                        
+                        // Highlight lỗi
+                        if (line.includes('ERROR') || line.includes('WARNING')) {
+                            div.classList.add('text-red-400');
+                        } else if (line.includes('LONG') || line.includes('SHORT')) {
+                           div.classList.add('text-binance');
+                        }
+                        
+                        div.textContent = line;
+                        logContainer.appendChild(div);
+                    });
+                } else {
+                    logContainer.innerHTML = '<div>System ready. Waiting for logs...</div>';
+                }
+            } catch (error) {
+                console.error('Error fetching logs:', error);
+            }
+        }
+        
+        // Auto Update mỗi 3 giây
+        fetchLogs();
+        setInterval(fetchLogs, 3000);
     </script>
 </body>
 </html>

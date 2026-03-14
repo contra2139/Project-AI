@@ -106,6 +106,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             if clean_data:
                 ai_result = await generate_trading_decision(symbol, clean_data)
                 
+                # Gemini có thể trả về Array dicts [ {...} ] hoặc Object dict {...}
+                if isinstance(ai_result, list) and len(ai_result) > 0:
+                    ai_result = ai_result[0]
+                elif not isinstance(ai_result, dict):
+                    ai_result = {}
+                
                 # Trích xuất và in dữ liệu
                 decision = ai_result.get("decision", "UNKNOWN")
                 reasoning = ai_result.get("reasoning", "Không có giải thích từ AI.")
@@ -113,6 +119,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 sl = ai_result.get("stop_loss", "N/A")
                 tp = ai_result.get("take_profit", "N/A")
                 
+                # Ghi đè Tín Hiệu Rõ Ràng Ra Log File để Web quét
+                logger.info(f"🚨 [TÍN HIỆU AI] Token: {symbol} | Action: {decision} | Entry: {entry} | SL: {sl}")
+                logger.info(f"💡 [LÝ DO AI] {reasoning}")
+                
+                 # Soạn tin nhắn gửi Telegram
                 msg_reply = f"🤖 **AI TRADING BRAIN** 🤖\n\n"
                 msg_reply += f"Tín hiệu: {decision}\n\n"
                 msg_reply += f"💡 Lý do: {reasoning}\n\n"

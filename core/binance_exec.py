@@ -1,5 +1,6 @@
 # Binance Executor Module
-# Xử lý lệnh Market/Limit, setup đòn bẩy vàimport logging
+# Xử lý lệnh Market/Limit, setup đòn bẩy và quản lý rủi ro
+import logging
 import math
 from binance import AsyncClient
 from binance.enums import *

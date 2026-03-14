@@ -75,10 +75,11 @@ async def generate_trading_decision(symbol: str, data_dict: dict) -> dict:
     Nhiệm vụ: Dựa vào dữ liệu Lượng tử (TA) đa khung thời gian sau đây và Hình ảnh đồ thị đính kèm, hãy quyết định giao dịch cho mã {symbol}.
     
     Quy tắc bắt buộc:
-    1. TUYỆT ĐỐI không được đi ngược xu hướng (Trend) của khung 4H (xem EMA và MACD khung 4H).
-    2. Xác định điểm Entry tốt nhất dựa trên khung 1H (Support/Resistance).
-    3. Điểm quản trị rủi ro Stop-Loss (SL) MỚI VÀ ĐỘNG phải được tính bằng công thức: [Entry] ± (1.5 * ATR khung 15m).
-    4. Trả về đúng định dạng JSON chuẩn. Trường "decision" chỉ được phép là: "LONG", "SHORT", hoặc "STAND BY".
+    1. XÁC NHẬN XU HƯỚNG: Tuyệt đối không được đánh ngược xu hướng (Trend) của khung 4H. Phải sử dụng cả EMA (34, 89, 200) và đường MACD khung 4H để xác nhận trend (Không chỉ dựa vào duy nhất 1 đường EMA).
+    2. ĐIỂM VÀO LỆNH (ENTRY): Xác định rủi ro phân phối dòng tiền. Khung 1H phải có sự hội tụ (confluence) của ít nhất 2 yếu tố: RSI (Quá mua/Quá bán) hoặc Stochastic, kèm theo Bollinger Bands (Squeeze hoặc Bounce). Tuyệt đối không Fomo.
+    3. XÁC NHẬN ĐỘNG LƯỢNG (MOMENTUM): Phân tích Volume và MACD Histogram ở khung 15m/1H để đánh giá xem lực đẩy (breakout) có đủ mạnh hay không.
+    4. QUẢN TRỊ RỦI RO (SL): Stop-Loss (SL) MỚI VÀ ĐỘNG phải được tính bằng công thức: [Entry] ± (1.5 * ATR khung 15m).
+    5. FORMAT: Trả về chuẩn JSON. "decision" chỉ được phép là: "LONG", "SHORT", hoặc "STAND BY". "reasoning" cần giải thích ngắn gọn bằng 1-2 câu lý do tại sao các chỉ số trên lại dẫn tới quyết định này.
     
     Dữ liệu định lượng (JSON):
     {payload_json}
