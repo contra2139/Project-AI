@@ -1,12 +1,109 @@
 # AI Brain Module 
-# Đóng gói JSON Payload, Chart Image và gọi Gemini API
 import google.generativeai as genai
+import json
+import logging
+import mplfinance as mpf
+import pandas as pd
+import os
+from datetime import datetime
 from config import config
+
+logger = logging.getLogger(__name__)
 
 genai.configure(api_key=config.GEMINI_API_KEY)
 
-async def generate_trading_decision(payload_json: str, chart_image_path: str = None):
-    # TODO: Khởi tạo mô hình Gemini
-    # TODO: System prompt cấm đi ngược Trend 4H + ép JSON output
-    # TODO: Xử lý request multimodal (Text + Hình ảnh)
-    pass
+# Khởi tạo mô hình (Dùng gemini-1.5-pro để phân tích nâng cao, hoặc flash cho tốc độ)
+generation_config = {
+  "temperature": 0.2, # Yêu cầu độ chính xác Quant cao
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_output_tokens": 8192,
+  "response_mime_type": "application/json", # Ép Format JSON
+}
+
+model = genai.GenerativeModel(
+  model_name="gemini-1.5-pro",
+  generation_config=generation_config,
+)
+
+def create_chart_image(df: pd.DataFrame, symbol: str, timeframe: str) -> str:
+    """Tạo file ảnh nến K-line từ DataFrame và lưu ra file tạm."""
+    if df.empty:
+        return None
+        
+    os.makedirs("temp", exist_ok=True)
+    file_path = f"temp/chart_{symbol}_{timeframe}_{int(datetime.now().timestamp())}.png"
+    
+    # Chỉ vẽ 60 nến gần nhất để Gemini dễ nhìn
+    plot_df = df.tail(60)
+    
+    # Định dạng đồ thị màu Dark
+    mc = mpf.make_marketcolors(up='#0ECB81', down='#F6465D', edge='inherit', wick='inherit', volume='in')
+    s  = mpf.make_mpf_style(marketcolors=mc, gridstyle=':', y_on_right=True, base_mpf_style='nightclouds')
+    
+    # Add EMA lines
+    added_plots = [
+        mpf.make_addplot(plot_df['EMA_34'], color='#FCD535', width=1),
+        mpf.make_addplot(plot_df['EMA_89'], color='#1E90FF', width=1)
+    ]
+    
+    mpf.plot(plot_df, type='candle', volume=True, style=s, addplot=added_plots, 
+             title=f"{symbol} - {timeframe}", savefig=file_path)
+             
+    return file_path
+
+async def generate_trading_decision(symbol: str, data_dict: dict) -> dict:
+    """Đóng gói dữ liệu Đa khung thời gian và Chart Ảnh -> Đẩy cho Gemini."""
+    
+    # Lấy dòng nến mới nhất của mỗi khung
+    latest_data = {}
+    for tf, df in data_dict.items():
+        if not df.empty:
+            # Dropna để an toàn chuyển JSON
+            row = df.iloc[-1].fillna(0).to_dict()
+            # Convert timestamp về string
+            row['timestamp'] = str(df.index[-1])
+            latest_data[tf] = row
+            
+    payload_json = json.dumps(latest_data, indent=2)
+    
+    # Tạo ảnh chart khung 1H (Context)
+    chart_path = create_chart_image(data_dict.get('1h', pd.DataFrame()), symbol, "1h")
+    
+    system_prompt = f"""
+    Bạn là một chuyên gia Senior Crypto Quant Trading.
+    Nhiệm vụ: Dựa vào dữ liệu Lượng tử (TA) đa khung thời gian sau đây và Hình ảnh đồ thị đính kèm, hãy quyết định giao dịch cho mã {symbol}.
+    
+    Quy tắc bắt buộc:
+    1. TUYỆT ĐỐI không được đi ngược xu hướng (Trend) của khung 4H (xem EMA và MACD khung 4H).
+    2. Xác định điểm Entry tốt nhất dựa trên khung 1H (Support/Resistance).
+    3. Điểm quản trị rủi ro Stop-Loss (SL) MỚI VÀ ĐỘNG phải được tính bằng công thức: [Entry] ± (1.5 * ATR khung 15m).
+    4. Trả về đúng định dạng JSON chuẩn. Trường "decision" chỉ được phép là: "LONG", "SHORT", hoặc "STAND BY".
+    
+    Dữ liệu định lượng (JSON):
+    {payload_json}
+    """
+    
+    try:
+        # Chuẩn bị payload multimodal
+        request_parts = [system_prompt]
+        
+        if chart_path and os.path.exists(chart_path):
+            img = genai.upload_file(chart_path)
+            request_parts.append(img)
+            
+        logger.info(f"🧠 Đang gọi Gemini suy luận cho {symbol}...")
+        response = await model.generate_content_async(request_parts)
+        
+        # Cleanup file tạm
+        if chart_path and os.path.exists(chart_path):
+            os.remove(chart_path)
+            
+        return json.loads(response.text)
+        
+    except Exception as e:
+        logger.error(f"Lỗi khi chạy Gemini API: {e}")
+        return {
+            "decision": "ERROR", 
+            "reasoning": f"Lỗi AI: {str(e)}"
+        }

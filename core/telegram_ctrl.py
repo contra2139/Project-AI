@@ -67,6 +67,9 @@ def parse_user_message(message: str) -> dict:
 from telegram import Update
 from telegram.ext import Application, MessageHandler, filters, ContextTypes
 from config import config
+from core.data_ingestion import get_multi_timeframe_data
+from core.ta_calculator import calculate_ta
+from core.ai_brain import generate_trading_decision
 import logging
 
 logger = logging.getLogger(__name__)
@@ -86,8 +89,45 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     if action["type"] == "analyze":
         symbol = action["symbol"]
-        await update.message.reply_text(f"🔍 Đang phân tích đa khung thời gian cho {symbol}...")
-        # TODO: Chuyển tiếp tới data_ingestion và ai_brain
+        await update.message.reply_text(f"🔍 Đang thu thập dữ liệu và phân tích đa khung thời gian cho {symbol}...")
+        
+        try:
+            # 1. Kéo mảng Data OHLCV
+            raw_data = await get_multi_timeframe_data(symbol, limit=250)
+            
+            # 2. Xử lý TA (Lạm dụng vòng lặp trên mảng dictionary)
+            clean_data = {}
+            for tf, df in raw_data.items():
+                if not df.empty:
+                    clean_data[tf] = calculate_ta(df)
+            
+            # 3. Yêu cầu AI Decision
+            if clean_data:
+                ai_result = await generate_trading_decision(symbol, clean_data)
+                
+                # Trích xuất và in dữ liệu
+                decision = ai_result.get("decision", "UNKNOWN")
+                reasoning = ai_result.get("reasoning", "Không có giải thích từ AI.")
+                entry = ai_result.get("entry", "N/A")
+                sl = ai_result.get("stop_loss", "N/A")
+                tp = ai_result.get("take_profit", "N/A")
+                
+                msg_reply = f"🤖 **AI TRADING BRAIN** 🤖\n\n"
+                msg_reply += f"Tín hiệu: {decision}\n\n"
+                msg_reply += f"💡 Lý do: {reasoning}\n\n"
+                
+                if decision in ["LONG", "SHORT"]:
+                    msg_reply += f"🎯 Entry: {entry}\n"
+                    msg_reply += f"🛡️ Stop-Loss (Động ATR): {sl}\n"
+                    msg_reply += f"💰 Take-Profit: {tp}"
+                    
+                await update.message.reply_text(msg_reply, parse_mode='Markdown')
+            else:
+                await update.message.reply_text(f"❌ Không tải được dữ liệu chuẩn cho mã {symbol}.")
+                
+        except Exception as e:
+            logger.error(f"Lỗi AI Pipeline: {e}")
+            await update.message.reply_text(f"⚠️ Đã có lỗi xảy ra trong quá trình AI phân tích. Kiểm tra log Hệ thống.")
         
     elif action["type"] == "immediate_order":
         await update.message.reply_text(f"⚡ Đã ghi nhận lệnh tức thì:\n• Action: {action['action']}\n• Price: {action['price']}\n• TP: {action['tp']}\n• SL: {action['sl']}")
