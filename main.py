@@ -6,11 +6,10 @@ import asyncio
 import logging
 
 from config import config
+from core.logger_setup import setup_global_logging
 
-# Setup Logging
-logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
-)
+# Thiết lập hệ thống log gốc
+setup_global_logging()
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Crypto Quant AI Bot")
