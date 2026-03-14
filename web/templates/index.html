@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Quant & AI Futures Bot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0e11; /* Binance Deep Dark */
+            color: #EAECEF;
+        }
+        .bg-panel {
+            background-color: #181A20; /* Binance Panel */
+        }
+        .text-buy {
+            color: #0ECB81;
+        }
+        .text-sell {
+            color: #F6465D;
+        }
+        .text-binance {
+            color: #FCD535;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <header class="mb-8 border-b border-gray-800 pb-4">
+        <h1 class="text-2xl font-bold flex items-center">
+            <span class="text-binance mr-2">🤖</span> AI Quant Futures Dashboard
+        </h1>
+        <p class="text-sm text-gray-400 mt-1">Hệ thống theo dõi và phân tích đa khung thời gian (4H, 1H, 15m)</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Chart Column -->
+        <div class="lg:col-span-2">
+            <div class="bg-panel rounded-lg p-4 border border-gray-800 min-h-[500px]">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold flex items-center">
+                        BTCUSDT <span class="bg-gray-800 text-xs px-2 py-1 rounded ml-2">Perpetual</span>
+                    </h2>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded text-sm transition">15m</button>
+                        <button class="px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded text-sm transition">1H</button>
+                        <button class="px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded text-sm transition text-binance">4H</button>
+                    </div>
+                </div>
+                <div id="tvchart" class="w-full h-[400px]"></div>
+            </div>
+        </div>
+
+        <!-- AI Logic & Orders Column -->
+        <div class="space-y-6">
+            <!-- AI Confluence Box -->
+            <div class="bg-panel rounded-lg p-4 border border-gray-800">
+                <h2 class="text-lg font-semibold mb-4 border-b border-gray-800 pb-2">🧠 AI Brain Decisions</h2>
+                <div class="space-y-3">
+                    <div class="p-3 bg-gray-800 rounded">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-mono text-gray-400">14:05 PM</span>
+                            <span class="text-xs font-bold text-buy bg-green-900/30 px-2 py-1 rounded">LONG</span>
+                        </div>
+                        <p class="text-sm">Mô hình cờ đuôi nheo (Bull Flag) khung 1H + RSI oversold khung 15m. Xu hướng chính 4H vẫn tăng.</p>
+                    </div>
+                    
+                    <div class="p-3 bg-gray-800 rounded">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-mono text-gray-400">10:15 AM</span>
+                            <span class="text-xs font-bold text-gray-400 bg-gray-700 px-2 py-1 rounded">STAND BY</span>
+                        </div>
+                        <p class="text-sm">Thị trường Sideway tích lũy. VWAP đang phẳng, chờ breakout rõ ràng.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active / Conditional Orders -->
+            <div class="bg-panel rounded-lg p-4 border border-gray-800">
+                <h2 class="text-lg font-semibold mb-4 border-b border-gray-800 pb-2">📋 Lệnh Chờ (Conditional)</h2>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex justify-between items-center p-2 hover:bg-gray-800 rounded">
+                        <span><span class="text-buy font-bold mr-1">L</span> BNBUSDC</span>
+                        <div class="text-right">
+                            <div class="text-gray-300">IF <span class="text-white">480</span></div>
+                            <div class="text-xs text-gray-500">Entry: 490</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script tạo biểu đồ mẫu -->
+    <script>
+        const chartOptions = {
+            layout: { textColor: '#d1d4dc', background: { type: 'solid', color: '#181A20' } },
+            grid: {
+                vertLines: { color: '#2B3139' },
+                horzLines: { color: '#2B3139' },
+            },
+            timeScale: {
+                timeVisible: true,
+                secondsVisible: false,
+            },
+        };
+        const chart = LightweightCharts.createChart(document.getElementById('tvchart'), chartOptions);
+        const candleSeries = chart.addCandlestickSeries({
+            upColor: '#0ECB81', downColor: '#F6465D', borderVisible: false,
+            wickUpColor: '#0ECB81', wickDownColor: '#F6465D'
+        });
+        
+        // Mẫu dữ liệu (Sau này API sẽ đổ vào đây)
+        const data = [
+            { time: '2026-03-14', open: 65000, high: 66000, low: 64000, close: 65500 },
+        ];
+        candleSeries.setData(data);
+    </script>
+</body>
+</html>
