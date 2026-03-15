@@ -1,39 +1,40 @@
 import asyncio
+import sys
 import pandas as pd
 from binance import AsyncClient
 from binance.exceptions import BinanceAPIException
 import logging
 
+# Fix: aiodns requires SelectorEventLoop on Windows
+# Python 3.8+ on Windows defaults to ProactorEventLoop
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 logger = logging.getLogger(__name__)
 
+from core.binance_client import BinanceClientManager
+
 async def fetch_klines(symbol: str, interval: str, limit: int = 100) -> pd.DataFrame:
-    """Tải klines từ Binance Futures và trả về DataFrame chuẩn."""
+    """Tải klines từ Binance Futures sử dụng Shared Client."""
     try:
-        # Sử dụng AsyncClient (Không cần API keys nếu chỉ fetch public data)
-        client = await AsyncClient.create()
-        # futures_klines trả về list of lists [Open time, Open, High, Low, Close, Volume, Close time, ...]
+        client = await BinanceClientManager.get_client()
         klines = await client.futures_klines(symbol=symbol, interval=interval, limit=limit)
-        await client.close_connection()
 
         if not klines:
             return pd.DataFrame()
 
-        # Tạo DataFrame
         df = pd.DataFrame(klines, columns=[
             'timestamp', 'open', 'high', 'low', 'close', 'volume',
             'close_time', 'quote_asset_volume', 'number_of_trades',
             'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'
         ])
 
-        # Chuyển đổi kiểu dữ liệu
         numeric_columns = ['open', 'high', 'low', 'close', 'volume']
         df[numeric_columns] = df[numeric_columns].apply(pd.to_numeric, axis=1)
         
-        # Chuyển đổi thời gian
         df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
         df.set_index('timestamp', inplace=True)
 
-        # Chỉ giữ lại OHLCV
         df = df[['open', 'high', 'low', 'close', 'volume']]
         return df
 
@@ -47,7 +48,6 @@ async def fetch_klines(symbol: str, interval: str, limit: int = 100) -> pd.DataF
 async def get_multi_timeframe_data(symbol: str, limit: int = 100) -> dict:
     """Kéo song song 3 khung: 4h, 1h, 15m. Trả về dict chứa 3 DataFrame."""
     try:
-        # Chạy song song 3 tác vụ bằng gather
         results = await asyncio.gather(
             fetch_klines(symbol, "4h", limit),
             fetch_klines(symbol, "1h", limit),

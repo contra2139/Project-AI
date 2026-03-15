@@ -1,2 +1,323 @@
-2026-03-14 15:23:56 - [core.telegram_ctrl] - ERROR - Lỗi AI Pipeline: 'list' object has no attribute 'get'
-2026-03-14 15:45:12 - [main] - ERROR - Lỗi khi kéo chart BTCUSDT: 'Open'
+2026-03-15 14:16:25 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:16:26 - [core.data_ingestion] - ERROR - Lỗi kéo nến BNBUSDC 1h: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:16:28 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:16:32 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:16:35 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:16:38 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:16:41 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:16:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:16:47 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:16:50 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:16:53 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:16:56 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:16:59 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:17:02 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:17:05 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:17:08 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:17:11 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:17:14 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:17:17 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:17:20 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:17:23 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:17:26 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:17:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:17:58 - [core.data_ingestion] - ERROR - Lỗi kéo nến BTCUSDT 1h: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:18:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:19:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:20:30 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:20:31 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:20:35 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:20:38 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:20:41 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:20:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:20:47 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:20:50 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:20:53 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:20:56 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:20:59 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:21:02 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:21:05 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:21:08 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:21:11 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:21:14 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:21:17 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:21:20 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:21:23 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:21:26 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:21:29 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:21:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:22:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:23:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:24:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:25:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:26:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:27:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:28:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:29:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:30:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:31:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:32:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:33:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:34:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:35:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:36:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:37:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:38:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:39:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:40:44 - [core.binance_exec] - ERROR - Lỗi khi lấy danh sách lệnh chờ: aiodns needs a SelectorEventLoop on Windows. See more: https://github.com/saghul/aiodns/issues/86
+2026-03-15 14:45:16 - [core.ai_brain] - ERROR - Lỗi khi chạy Gemini API: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-2.5-pro-preview-03-25 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-03-15 15:12:35 - [telegram.ext.Application] - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_application.py", line 1298, in process_update
+    await coroutine
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_handlers\basehandler.py", line 158, in handle_update
+    return await self.callback(update, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Agent_AI_Antigravity\Binance_price\crypto_ai_bot\core\telegram_ctrl.py", line 209, in handle_message
+    result = await execute_conditional_order(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "E:\Agent_AI_Antigravity\Binance_price\crypto_ai_bot\core\binance_exec.py", line 157, in execute_conditional_order
+    type=ORDER_TYPE_STOP_MARKET,
+         ^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'ORDER_TYPE_STOP_MARKET' is not defined. Did you mean: 'ORDER_TYPE_MARKET'?
+2026-03-15 15:12:35 - [asyncio] - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x00000236E63EB250>
+2026-03-15 15:12:35 - [asyncio] - ERROR - Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x00000236E6DF4FB0>, 1548770.0590201)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x00000236E6DF5010>, 1548770.4665897)])']
+connector: <aiohttp.connector.TCPConnector object at 0x00000236E63DAEA0>
+2026-03-15 15:39:46 - [core.binance_exec] - ERROR - Binance Error ở lệnh Điều (Conditional): APIError(code=-4120): Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.
+2026-03-15 15:40:48 - [core.binance_exec] - ERROR - Binance Error ở lệnh Market: APIError(code=-4120): Order type not supported for this endpoint. Please use the Algo Order API endpoints instead.
+2026-03-15 16:00:44 - [core.binance_exec] - ERROR - Lỗi gửi Algo Order (STOP_MARKET): APIError(code=-1102): Mandatory parameter 'triggerprice' was not sent, was empty/null, or malformed.
+2026-03-15 16:00:44 - [core.binance_exec] - ERROR - Binance Error ở lệnh Market: APIError(code=-1102): Mandatory parameter 'triggerprice' was not sent, was empty/null, or malformed.
+2026-03-15 17:51:09 - [asyncio] - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x0000020C7FC4E350>
+2026-03-15 17:51:09 - [asyncio] - ERROR - Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x0000020C7FCF8E30>, 1558284.6031095)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x0000020C7FCF9430>, 1558284.7864629)])']
+connector: <aiohttp.connector.TCPConnector object at 0x0000020C7FC4C550>
+2026-03-15 17:51:09 - [asyncio] - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x0000020C7FBAF770>
+2026-03-15 17:51:09 - [asyncio] - ERROR - Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x0000020C7FCF8DD0>, 1558284.6055088)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x0000020C7FCF9790>, 1558284.92534)])']
+connector: <aiohttp.connector.TCPConnector object at 0x0000020C7FBAFB60>
+2026-03-15 19:11:07 - [asyncio] - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x0000028EFF017770>
+2026-03-15 19:11:07 - [asyncio] - ERROR - Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x0000028EFF0D3CB0>, 1563082.6087576)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x0000028EFF130590>, 1563082.8338937)])']
+connector: <aiohttp.connector.TCPConnector object at 0x0000028EFF09EF90>
+2026-03-15 19:13:46 - [asyncio] - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x0000024C91E77A10>
+2026-03-15 19:13:46 - [asyncio] - ERROR - Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x0000024C91F0F230>, 1563241.208632)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x0000024C91F0FC50>, 1563241.406579)])']
+connector: <aiohttp.connector.TCPConnector object at 0x0000024C91E77E00>
+2026-03-15 19:41:26 - [asyncio] - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x000001BC916E7770>
+2026-03-15 19:41:26 - [asyncio] - ERROR - Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x000001BC917A3590>, 1564902.0904613)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x000001BC917A3D70>, 1564902.2813388)])']
+connector: <aiohttp.connector.TCPConnector object at 0x000001BC91772F90>
+2026-03-15 19:42:31 - [core.telegram_ctrl] - ERROR - Lỗi AI Pipeline: Timed out
+2026-03-15 19:42:40 - [telegram.ext.Application] - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\connection.py", line 103, in handle_async_request
+    return await self._connection.handle_async_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\http11.py", line 136, in handle_async_request
+    raise exc
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\http11.py", line 106, in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\http11.py", line 177, in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_async\http11.py", line 217, in _receive_event
+    data = await self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.READ_NUM_BYTES, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_backends\anyio.py", line 32, in read
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadTimeout
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\request\_httpxrequest.py", line 277, in do_request
+    res = await self._client.request(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1540, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadTimeout
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_application.py", line 1298, in process_update
+    await coroutine
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_handlers\basehandler.py", line 158, in handle_update
+    return await self.callback(update, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Agent_AI_Antigravity\Binance_price\crypto_ai_bot\core\telegram_ctrl.py", line 206, in handle_message
+    await update.message.reply_text(f"⚠️ Đã có lỗi xảy ra trong quá trình AI phân tích. Kiểm tra log Hệ thống.")
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\_message.py", line 1775, in reply_text
+    return await self.get_bot().send_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<20 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_extbot.py", line 2977, in send_message
+    return await super().send_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<21 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\_bot.py", line 1091, in send_message
+    return await self._send_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<19 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_extbot.py", line 618, in _send_message
+    result = await super()._send_message(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<21 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\_bot.py", line 803, in _send_message
+    result = await self._post(
+             ^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\_bot.py", line 691, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_extbot.py", line 362, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\_bot.py", line 720, in _do_post
+    result = await request.post(
+             ^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\request\_baserequest.py", line 197, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\request\_baserequest.py", line 304, in _request_wrapper
+    code, payload = await self.do_request(
+                    ^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\request\_httpxrequest.py", line 294, in do_request
+    raise TimedOut from err
+telegram.error.TimedOut: Timed out
+2026-03-15 19:44:24 - [asyncio] - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x000001FEFDC0B770>
+2026-03-15 19:44:24 - [asyncio] - ERROR - Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x000001FEFDCC38F0>, 1565079.1652336)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x000001FEFDCC37D0>, 1565079.3704578)])']
+connector: <aiohttp.connector.TCPConnector object at 0x000001FEFDC92F90>
+2026-03-15 19:47:30 - [core.data_ingestion] - ERROR - Binance API Lỗi (BNB 15m): APIError(code=-1121): Invalid symbol.
+2026-03-15 19:47:30 - [core.data_ingestion] - ERROR - Binance API Lỗi (BNB 4h): APIError(code=-1121): Invalid symbol.
+2026-03-15 19:47:30 - [core.data_ingestion] - ERROR - Binance API Lỗi (BNB 1h): APIError(code=-1121): Invalid symbol.
+2026-03-15 19:58:22 - [asyncio] - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<start_telegram_bot() done, defined at E:\Agent_AI_Antigravity\Binance_price\crypto_ai_bot\core\telegram_ctrl.py:388> exception=NameError("name 'logger' is not defined")>
+Traceback (most recent call last):
+  File "E:\Agent_AI_Antigravity\Binance_price\crypto_ai_bot\core\telegram_ctrl.py", line 402, in start_telegram_bot
+    logger.info("🤖 Telegram Bot đã sẵn sàng nhận lệnh...")
+    ^^^^^^
+NameError: name 'logger' is not defined
+2026-03-15 19:58:56 - [asyncio] - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<start_telegram_bot() done, defined at E:\Agent_AI_Antigravity\Binance_price\crypto_ai_bot\core\telegram_ctrl.py:408> exception=NameError("name 'logger' is not defined")>
+Traceback (most recent call last):
+  File "E:\Agent_AI_Antigravity\Binance_price\crypto_ai_bot\core\telegram_ctrl.py", line 422, in start_telegram_bot
+    logger.info("🤖 Telegram Bot đã sẵn sàng nhận lệnh...")
+    ^^^^^^
+NameError: name 'logger' is not defined
+2026-03-15 20:11:27 - [asyncio] - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<start_telegram_bot() done, defined at E:\Agent_AI_Antigravity\Binance_price\crypto_ai_bot\core\telegram_ctrl.py:435> exception=NameError("name 'logger' is not defined")>
+Traceback (most recent call last):
+  File "E:\Agent_AI_Antigravity\Binance_price\crypto_ai_bot\core\telegram_ctrl.py", line 449, in start_telegram_bot
+    logger.info("🤖 Telegram Bot đã sẵn sàng nhận lệnh...")
+    ^^^^^^
+NameError: name 'logger' is not defined
+2026-03-15 20:23:55 - [telegram.ext.Application] - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_application.py", line 1298, in process_update
+    await coroutine
+  File "C:\Users\MSI GF\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_handlers\basehandler.py", line 158, in handle_update
+    return await self.callback(update, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Agent_AI_Antigravity\Binance_price\crypto_ai_bot\core\telegram_ctrl.py", line 354, in handle_message
+    tp = float(ai_data.get("take_profit", 0))
+ValueError: could not convert string to float: '651.60 - 646.50'
+2026-03-15 20:27:31 - [asyncio] - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x000001DFDBE2FB60>
+2026-03-15 20:27:31 - [asyncio] - ERROR - Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x000001DFDBEE3350>, 1567666.7587099)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x000001DFDBEE3BF0>, 1567667.0323868)])']
+connector: <aiohttp.connector.TCPConnector object at 0x000001DFDBEAEE40>
+2026-03-15 20:28:40 - [core.binance_exec] - ERROR - Lỗi gửi Algo Order (STOP_MARKET): APIError(code=-4509): Time in Force (TIF) GTE can only be used with open positions. Please ensure that positions are available.
+2026-03-15 20:28:40 - [core.binance_exec] - ERROR - Binance Error ở lệnh Market: APIError(code=-4509): Time in Force (TIF) GTE can only be used with open positions. Please ensure that positions are available.

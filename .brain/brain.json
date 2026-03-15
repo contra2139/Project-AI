@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "schema_version": "1.1.0",
+    "awf_version": "4.0.0",
+    "last_updated": "2026-03-15T16:25:00Z"
+  },
+  "project": {
+    "name": "Crypto Quant AI Bot",
+    "type": "Trading Bot",
+    "status": "Active Development",
+    "version": "0.1.5"
+  },
+  "tech_stack": {
+    "frontend": {
+      "framework": "Vanilla JS",
+      "styling": "Tailwind CSS (CDN)",
+      "charts": "Lightweight Charts",
+      "markdown": "marked.js"
+    },
+    "backend": {
+      "framework": "FastAPI (Lifespan Context Manager)",
+      "server": "Uvicorn (Production mode, host=127.0.0.1)",
+      "bot_library": "python-telegram-bot",
+      "ai": "Gemini 3.1 Pro Preview",
+      "ai_sdk": "google.genai v1.60.0 (NEW - migrated from deprecated google.generativeai)"
+    },
+    "database": {
+      "type": "NoSQL (File-based JSON)",
+      "storage": "logs/latest_ai.json",
+      "buffer": "logs/ai_memory.json (Persistent per-symbol cache)"
+    }
+  },
+  "features": [
+    "Multi-timeframe data ingestion (4H, 1H, 15m)",
+    "Quant TA calculation (EMA 34/89/200, RSI, MACD, ADX, BB, ATR)",
+    "Candlestick Pattern Detection - Algorithmic (Engulfing, Hammer, ShootingStar, MorningStar, EveningStar)",
+    "Gemini 3.1 Pro decision engine with Bulkowski knowledge base",
+    "Telegram slash commands control",
+    "Web Dashboard with live logs and chart sync",
+    "Automated Margin & Leverage setup",
+    "Security Hardening (PIN-based Kill Switch, Restricted host, .gitignore)",
+    "Optimized Log Viewer (Tail implementation)",
+    "Binance Algo Order Endpoint Support (/fapi/v1/algoOrder for 2026 compliance)",
+    "Limit Order Execution for specific entry price adherence",
+    "Tailored Trade Risk (USDT) via Telegram commands",
+    "Persistent AI Memory Buffer with 60-min freshness TTL and auto-GC",
+    "Interactive Shortcut Flow (LLL/SSS) with auto-analysis and trend confluence check",
+    "Robust Value Parsing (Safe average for AI range price strings)"
+  ],
+  "api_endpoints": [
+    { "path": "/", "method": "GET", "auth": false, "explained": "Giao diện Dashboard monitor.html" },
+    { "path": "/api/chart/{symbol}", "method": "GET", "auth": false, "explained": "Dữ liệu nến cho biểu đồ" },
+    { "path": "/api/ai_brain", "method": "GET", "auth": true, "explained": "Kết quả phân tích AI mới nhất" },
+    { "path": "/api/logs", "method": "GET", "auth": true, "explained": "Server logs (tail)"},
+    { "path": "/api/orders", "method": "GET", "auth": true, "explained": "Lệnh chờ từ Binance" },
+    { "path": "/api/shutdown", "method": "POST", "auth": "PIN (X-API-KEY)", "explained": "Tắt bot triệt để (yêu cầu mã PIN)" }
+  ],
+  "knowledge_items": {
+    "patterns": [
+      "Shared Binance Client Manager (Singleton)",
+      "Tail implementation for efficient log browsing",
+      "PIN-based authentication for critical operations (Kill Switch)",
+      "FastAPI Lifespan context manager (modern startup/shutdown)",
+      "Bulkowski Candlestick Knowledge Base injected into AI system prompt",
+      "Low-level _request_futures_api for non-SDK algoOrder endpoint support",
+      "AI Memory Lifecycle: 60min Freshness, 24h/50-item GC",
+      "Confluence Check: Warn user if trade direction opposes AI trend"
+    ],
+    "gotchas": [
+      "ValueError: AI may return price ranges (e.g. 100-105) - requires safe_extract_price mean calculation",
+      "Binance APIError -4509: closePosition=true requires open position - fix with quantity + reduceOnly=True for pending LIMIT orders",
+      "google.genai (new SDK) requires 'models/' prefix for model names",
+      "Binance Futures 2026: STOP_MARKET/TAKE_PROFIT must use /fapi/v1/algoOrder endpoint",
+      "Binance Algo Order: Param name is 'triggerPrice' - not 'stopPrice'",
+      "Telegram: Increased timeouts (30s) prevent TimedOut errors during analysis"
+    ],
+    "model_info": {
+      "name": "models/gemini-3.1-pro-preview",
+      "sdk": "google.genai",
+      "confirmed_available": true
+    }
+  }
+}

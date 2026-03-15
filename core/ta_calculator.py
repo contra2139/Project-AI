@@ -26,6 +26,11 @@ def calculate_ta(df: pd.DataFrame) -> pd.DataFrame:
     # Tính toán Volatility
     df.ta.bbands(length=20, std=2, append=True)
     df.ta.atr(length=14, append=True)
+
+    # Nhận diện Mô hình nến (Professional Patterns)
+    # CDL_ENGULFING, CDL_HAMMER, CDL_SHOOTINGSTAR, etc.
+    patterns = ["engulfing", "hammer", "shootingstar", "morningstar", "eveningstar"]
+    df.ta.cdl_pattern(name=patterns, append=True)
     
     # Data Cleansing: Bỏ qua N giá trị đầu tiên bị trễ do EMA200 và giữ lại các giá trị sạch
     df.dropna(inplace=True)

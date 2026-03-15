@@ -6,10 +6,11 @@ from binance import AsyncClient
 from binance.enums import *
 from binance.exceptions import BinanceAPIException
 from config import config
+from core.binance_client import BinanceClientManager
 
 logger = logging.getLogger(__name__)
 
-async def setup_margin_and_leverage(client: AsyncClient, symbol: str, leverage: int = 20):
+async def setup_margin_and_leverage(client: AsyncClient, symbol: str, leverage: int = 15):
     """Cấu hình Đòn bẩy và Margin Type (Isolated) trước khi vào lệnh."""
     try:
         # Đổi sang ISOLATED Margin (An toàn hơn Cross)
@@ -26,8 +27,8 @@ async def setup_margin_and_leverage(client: AsyncClient, symbol: str, leverage: 
     except BinanceAPIException as e:
         logger.error(f"Lỗi setup đòn bẩy cho {symbol}: {e}")
 
-async def calculate_quantity(client: AsyncClient, symbol: str, entry_price: float, usdt_risk: float = 20.0, leverage: int = 20) -> float:
-    """Tính toán Volume (Base Asset) dựa trên số USD muốn đánh (mặc định đánh lệnh 20$ x đòn bẩy)."""
+async def calculate_quantity(client: AsyncClient, symbol: str, entry_price: float, usdt_risk: float = 10.0, leverage: int = 15) -> float:
+    """Tính toán Volume (Base Asset) dựa trên số USD thực tế muốn rủi ro (Risk x Leverage)."""
     try:
         # Số tiền Margin muốn rủi ro * đòn bẩy = Size lệnh thực tế
         size_usdt = usdt_risk * leverage
@@ -58,9 +59,40 @@ def get_side_from_action(action: str) -> str:
 def get_opposite_side(action: str) -> str:
     return SIDE_SELL if action.upper() == 'LONG' else SIDE_BUY
 
-async def execute_trade(symbol: str, action: str, price: float, sl: float, tp: float):
+async def create_algo_order(client: AsyncClient, symbol: str, side: str, order_type: str, stop_price: float, quantity: float = 0, close_position: bool = False, reduce_only: bool = False):
     """
-    Thực thi Lệnh Market tức thì kèm sẵn TP/SL.
+    Helper gửi lệnh Algo (STOP_MARKET, TAKE_PROFIT_MARKET) qua endpoint mới /fapi/v1/algoOrder.
+    Sửa lỗi APIError(code=-4120): Order type not supported for this endpoint.
+    """
+    params = {
+        "symbol": symbol,
+        "side": side,
+        "algoType": "CONDITIONAL",
+        "type": order_type,
+        "triggerPrice": str(stop_price),
+        "timeInForce": "GTC"
+    }
+    
+    if close_position:
+        # closePosition=true KHÔNG thể dùng chung với quantity hoặc reduceOnly (Dùng khi đã có vị thế mở)
+        params["closePosition"] = "true"
+    else:
+        if quantity > 0:
+            params["quantity"] = str(quantity)
+        if reduce_only:
+            params["reduceOnly"] = "true"
+        
+    try:
+        # Sử dụng phương thức low-level để gọi endpoint chưa có trong SDK chính thức
+        resp = await client._request_futures_api('post', 'algoOrder', signed=True, data=params)
+        return resp
+    except Exception as e:
+        logger.error(f"Lỗi gửi Algo Order ({order_type}): {e}")
+        raise e
+
+async def execute_trade(symbol: str, action: str, price: float, sl: float, tp: float, usdt_risk: float = 20.0):
+    """
+    Thực thi Lệnh LIMIT (Giá chờ) kèm sẵn TP/SL.
     """
     try:
         # Chỉ chạy lệnh nếu API Key được cấu hình
@@ -70,53 +102,60 @@ async def execute_trade(symbol: str, action: str, price: float, sl: float, tp: f
              
         # Tùy chọn Trade Mode (Testnet = True nếu muốn giả lập trên sàn)
         use_testnet = (config.TRADE_MODE.lower() == "paper_trading")
-        client = await AsyncClient.create(config.BINANCE_API_KEY, config.BINANCE_API_SECRET, testnet=use_testnet)
+        client = await BinanceClientManager.get_client()
         
-        await setup_margin_and_leverage(client, symbol, leverage=20)
-        qty = await calculate_quantity(client, symbol, price, usdt_risk=20.0) # test mặc định lệnh 20$
+        # 0. Setup Đòn bẩy 15x và Margin
+        await setup_margin_and_leverage(client, symbol, leverage=15)
+
+        # 0.5. Tính toán Quantity (Dùng 15x leverage bên trong)
+        qty = await calculate_quantity(client, symbol, price, usdt_risk=usdt_risk, leverage=15)
         
         if qty <= 0:
-            await client.close_connection()
             return {"status": "error", "message": "Số lượng lệnh quá nhỏ."}
 
-        # 1. BẮN LỆNH GỐC (MARKET)
+        # 1. BẮN LỆNH GỐC (LIMIT)
         main_side = get_side_from_action(action)
-        logger.info(f"Đang đâm Market {action} {symbol} SL: {qty}")
+        logger.info(f"Đang đặt lệnh LIMIT {action} {symbol} tại {price} | Qty: {qty}")
         
         order = await client.futures_create_order(
             symbol=symbol,
             side=main_side,
-            type=ORDER_TYPE_MARKET,
-            quantity=qty
+            type=ORDER_TYPE_LIMIT,
+            price=str(price),
+            quantity=qty,
+            timeInForce=TIME_IN_FORCE_GTC
         )
         logger.info(f"Khớp {action} thành công. OrderID: {order['orderId']}")
         
         # 2. BẮN LỆNH SL/TP (REDUCE ONLY)
+        # SỬA LỖI -4509: Dùng quantity + reduceOnly thay vì closePosition 
+        # để có thể đặt lệnh chờ SL/TP ngay cả khi lệnh LIMIT vào chưa khớp.
         opposite_side = get_opposite_side(action)
         
         # SL - Stop Market
         if sl > 0:
-            await client.futures_create_order(
+            await create_algo_order(
+                client=client,
                 symbol=symbol,
                 side=opposite_side,
-                type=ORDER_TYPE_STOP_MARKET,
-                stopPrice=sl,
-                closePosition="true", # Tự động quy qty về vị thế hiện tại
-                timeInForce=TIME_IN_FORCE_GTC
+                order_type=FUTURE_ORDER_TYPE_STOP_MARKET,
+                stop_price=sl,
+                quantity=qty,
+                reduce_only=True
             )
         
         # TP - Take Profit Market
         if tp > 0:
-             await client.futures_create_order(
+             await create_algo_order(
+                client=client,
                 symbol=symbol,
                 side=opposite_side,
-                type=ORDER_TYPE_TAKE_PROFIT_MARKET,
-                stopPrice=tp,
-                closePosition="true",
-                timeInForce=TIME_IN_FORCE_GTC
+                order_type=FUTURE_ORDER_TYPE_TAKE_PROFIT_MARKET,
+                stop_price=tp,
+                quantity=qty,
+                reduce_only=True
             )
 
-        await client.close_connection()
         return {"status": "success", "order": order}
 
     except BinanceAPIException as e:
@@ -126,21 +165,20 @@ async def execute_trade(symbol: str, action: str, price: float, sl: float, tp: f
         logger.error(f"System Error ở lệnh Market: {e}")
         return {"status": "error", "message": str(e)}
 
-async def execute_conditional_order(symbol: str, action: str, trigger_price: float, entry_price: float, sl: float, tp: float):
+async def execute_conditional_order(symbol: str, action: str, trigger_price: float, entry_price: float, sl: float, tp: float, usdt_risk: float = 10.0):
     """
-    Thực thi Lệnh CĂN GIÁ (Nằm vùng trên sàn).
-    sử dụng STOP_MARKET / TAKE_PROFIT_MARKET để kích hoạt.
+    Đặt lệnh chờ Trigger (STOP) - Dùng 15x leverage mặc định.
     """
     try:
-        if not config.BINANCE_API_KEY:
-             return {"status": "error", "message": "Missing API Keys"}
+        client_manager = BinanceClientManager()
+        client = await client_manager.get_client()
+
+        # 0. Setup Đòn bẩy 15x và Margin
+        await setup_margin_and_leverage(client, symbol, leverage=15)
+
+        # 0.5 Tính toán Quantity
+        qty = await calculate_quantity(client, symbol, entry_price, usdt_risk, leverage=15)
              
-        use_testnet = (config.TRADE_MODE.lower() == "paper_trading")
-        client = await AsyncClient.create(config.BINANCE_API_KEY, config.BINANCE_API_SECRET, testnet=use_testnet)
-        
-        await setup_margin_and_leverage(client, symbol, leverage=20)
-        qty = await calculate_quantity(client, symbol, entry_price, usdt_risk=20.0) 
-        
         main_side = get_side_from_action(action)
         
         # Để bắn Limit theo Trigger, Binance futures dùng STOP/TAKE_PROFIT làm lệnh kích hoạt
@@ -150,23 +188,73 @@ async def execute_conditional_order(symbol: str, action: str, trigger_price: flo
         logger.info(f"Đang cài bẫy {action} {symbol} tại {trigger_price}")
         
         # Ghi chú: Binance Futures thường khóa lệnh OCO phức tạp.
-        # Ở kịch bản lệnh chờ cơ bản: Bắn 1 lệnh STOP_MARKET vào họng sàn cắn mồi trước.
-        conditional_order = await client.futures_create_order(
+        # Ở kịch bản lệnh chờ cơ bản: Bắn 1 lệnh STOP_MARKET vào họng sàn cắn mồi trước qua Algo Endpoint.
+        conditional_order = await create_algo_order(
+            client=client,
             symbol=symbol,
             side=main_side,
-            type=ORDER_TYPE_STOP_MARKET,
-            stopPrice=trigger_price, # Giá chạm để kích hoạt
-            quantity=qty,
-            timeInForce=TIME_IN_FORCE_GTC
+            order_type=FUTURE_ORDER_TYPE_STOP_MARKET,
+            stop_price=trigger_price,
+            quantity=qty
         )
         
         logger.info(f"Bẫy gài thành công. OrderID: {conditional_order['orderId']}")
         # Lưu ý: Với lệnh Conditional, SL/TP nên do Order Manager ngầm đặt SAU KHI lệnh khớp,
         # Nếu gửi luôn Reduce_only lúc vị thế (qty) đang = 0 thì nó sập.
         
-        await client.close_connection()
         return {"status": "success", "order": conditional_order}
 
     except BinanceAPIException as e:
         logger.error(f"Binance Error ở lệnh Điều (Conditional): {e}")
         return {"status": "error", "message": str(e)}
+
+async def get_open_orders():
+    """Lấy danh sách các lệnh đang treo trên sàn Binance Futures."""
+    try:
+        if not config.BINANCE_API_KEY:
+             return []
+             
+        use_testnet = (config.TRADE_MODE.lower() == "paper_trading")
+        client = await BinanceClientManager.get_client()
+        
+        # Lấy tất cả lệnh đang mở (Open Orders)
+        open_orders = await client.futures_get_open_orders()
+        
+        # Rút gọn dữ liệu trả về cho Frontend
+        result = []
+        for o in open_orders:
+            result.append({
+                "symbol": o.get("symbol"),
+                "orderId": o.get("orderId"),
+                "side": o.get("side"),
+                "type": o.get("type"),
+                "price": o.get("price"),
+                "stopPrice": o.get("stopPrice"),
+                "origQty": o.get("origQty"),
+                "time": o.get("time")
+            })
+        return result
+    except Exception as e:
+        logger.error(f"Lỗi khi lấy danh sách lệnh chờ: {e}")
+        return []
+async def get_balance():
+    """Lấy số dư USDT/USDC khả dụng trong ví Futures."""
+    try:
+        if not config.BINANCE_API_KEY:
+             return 0.0
+             
+        use_testnet = (config.TRADE_MODE.lower() == "paper_trading")
+        client = await BinanceClientManager.get_client()
+        
+        account_info = await client.futures_account()
+        assets = account_info.get('assets', [])
+        
+        total_balance = 0.0
+        for asset in assets:
+            if asset['asset'] in ['USDT', 'USDC']:
+                total_balance += float(asset['walletBalance'])
+                
+        return round(total_balance, 2)
+    except Exception as e:
+        logger.error(f"Lỗi khi lấy số dư: {e}")
+        return 0.0

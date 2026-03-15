@@ -16,7 +16,7 @@ def setup_global_logging():
     
     # 1. Console Handler (In ra màn hình cho dễ theo dõi)
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
+    console_handler.setLevel(logging.WARNING) # Chỉ in WARN/ERR, giấu đi các INFO không cần thiết
     console_handler.setFormatter(formatter)
     
     # 2. File Handler - INFO (Lưu trữ lịch sử)
@@ -58,3 +58,6 @@ def setup_global_logging():
     logging.getLogger("httpx").setLevel(logging.WARNING)
     logging.getLogger("telegram").setLevel(logging.WARNING)
     logging.getLogger("apscheduler").setLevel(logging.WARNING)
+    logging.getLogger("watchfiles.main").setLevel(logging.WARNING)
+    logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
+    logging.getLogger("uvicorn.error").setLevel(logging.WARNING)

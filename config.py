@@ -10,6 +10,7 @@ class Config:
     TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
     TRADE_MODE = os.getenv("TRADE_MODE", "paper_trading")
+    SHUTDOWN_PIN = os.getenv("SHUTDOWN_PIN", "123456")
 
     @classmethod
     def validate(cls):
