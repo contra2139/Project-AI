@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Quant AI - Premium Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        body { font-family: 'Outfit', 'Inter', sans-serif; }
+        .font-quant { font-family: 'Inter', monospace; }
+    </style>
+</head>
+<body class="min-h-screen text-slate-100 overflow-x-hidden bg-[#08090a]">
+
+    <!-- Premium Background Glows (Subtle) -->
+    <div class="fixed top-[-10%] left-[-10%] w-[35%] h-[35%] bg-emerald-500/5 blur-[150px] rounded-full -z-10"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[35%] h-[35%] bg-red-500/5 blur-[150px] rounded-full -z-10"></div>
+
+    <div class="max-w-[1600px] mx-auto p-4 md:p-6">
+        <!-- Top Navigation / Stats Bar -->
+        <header class="glass-panel p-4 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 glass-panel flex items-center justify-center text-2xl shadow-inner">🤖</div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-yellow-300 to-yellow-600 bg-clip-text text-transparent">AI QUANT FUTURES PRO</h1>
+                    <div class="flex items-center gap-3 text-[10px] uppercase tracking-widest text-gray-400 mt-1">
+                        <span class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1 animate-pulse"></span> Systems Active</span>
+                        <span class="border-l border-gray-700 h-2 px-2">v1.5 Stabilized</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Summary Stats -->
+            <div class="flex items-center gap-6">
+                <div class="text-center px-4 border-r border-gray-800">
+                    <div class="text-[10px] text-gray-500 uppercase font-bold mb-1">Total Balance</div>
+                    <div id="top-balance" class="text-lg font-bold font-quant">$0.00</div>
+                </div>
+                <div class="text-center px-4 border-r border-gray-800">
+                    <div class="text-[10px] text-gray-500 uppercase font-bold mb-1">Open Positions</div>
+                    <div id="top-pos-count" class="text-lg font-bold font-quant">0</div>
+                </div>
+                <button onclick="shutdownBot()" class="btn-glass btn-danger-glass px-5 py-2 rounded-xl text-xs font-bold transition-all">
+                    STOP SYSTEMS
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            
+            <!-- LEFT: Control & Portfolio (1 Col) -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Portfolio Open Positions -->
+                <section class="glass-panel p-5 overflow-hidden">
+                    <h3 class="text-sm font-bold uppercase tracking-wider mb-4 flex items-center text-gray-400">
+                        <span class="mr-2">📁</span> Active Portfolio
+                    </h3>
+                    <div id="position-container" class="space-y-3 max-h-[450px] overflow-y-auto pr-2 custom-scrollbar">
+                        <div class="text-center py-10 text-gray-500 italic text-xs">Không có vị thế đang mở.</div>
+                    </div>
+                </section>
+
+                <!-- Quick Control Panel -->
+                <section class="glass-panel p-5">
+                    <h3 class="text-sm font-bold uppercase tracking-wider mb-4 flex items-center text-gray-400">
+                        <span class="mr-2">🕹️</span> Quick Control
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="p-3 glass-card text-xs">
+                            <label class="block mb-2 text-gray-500">Current Risk Per Trade</label>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-lg">$20.0</span>
+                                <span class="text-gray-600 bg-black/30 px-2 py-0.5 rounded">Locked (env)</span>
+                            </div>
+                        </div>
+                        <div class="p-3 glass-card text-xs">
+                            <label class="block mb-2 text-gray-500">Global Leverage</label>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-lg">15x</span>
+                                <span class="text-emerald-500 font-bold">Standard</span>
+                            </div>
+                        </div>
+                        <button onclick="alert('Feature coming soon: Emergency Close All')" class="w-full py-3 glass-card hover:bg-red-500/20 text-red-400 font-bold text-xs uppercase tracking-tighter transition-all">
+                            Emergency Exit (All)
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- MIDDLE: Chart & AI Insights (2 Cols) -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Main Chart -->
+                <div class="glass-panel p-4 relative">
+                    <div id="chart-header" class="flex justify-between items-center mb-4 px-2">
+                        <div class="flex items-center gap-4">
+                            <h2 id="chart-symbol" class="text-xl font-bold tracking-tight">BTCUSDT</h2>
+                            <span class="bg-blue-500/20 text-blue-400 text-[10px] px-2 py-0.5 rounded border border-blue-500/30 font-bold uppercase">Binance Futures</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="text-[10px] text-gray-500 text-right">
+                                <div id="chart-price" class="text-lg font-bold font-quant text-gray-200">-</div>
+                                <div id="chart-change" class="text-green-400">+0.00%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tvchart" class="w-full h-[500px] rounded-xl overflow-hidden shadow-2xl"></div>
+                </div>
+
+                <!-- AI Analysis Card -->
+                <div class="glass-panel p-5">
+                    <div class="flex justify-between items-center mb-4 border-b border-white/5 pb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center text-xs animate-spin-slow">✨</div>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-gray-200">AI Senior Analyst Insight</h3>
+                        </div>
+                        <div id="ai-decision-tag" class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter">
+                            WAITING DATA...
+                        </div>
+                    </div>
+                    <div id="ai-content" class="prose prose-invert prose-sm max-w-none text-gray-300 max-h-[400px] overflow-y-auto pr-3 custom-scrollbar leading-relaxed">
+                        <div class="animate-pulse space-y-2 mt-4">
+                            <div class="h-4 bg-white/5 rounded w-3/4"></div>
+                            <div class="h-4 bg-white/5 rounded w-full"></div>
+                            <div class="h-4 bg-white/5 rounded w-5/6"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Logs & Pending (1 Col) -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Live Trading Log -->
+                <div class="glass-panel flex flex-col h-[500px]">
+                    <div class="p-4 border-b border-white/5 flex justify-between items-center">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400">System Logs</h3>
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    </div>
+                    <div id="log-terminal" class="flex-1 p-4 font-mono text-[10px] overflow-y-auto space-y-1.5 custom-scrollbar text-gray-400">
+                        <!-- Logs here -->
+                    </div>
+                </div>
+
+                <!-- Pending Orders -->
+                <div class="glass-panel p-5">
+                    <h3 class="text-sm font-bold uppercase tracking-wider mb-4 text-gray-400 flex justify-between">
+                        Pending Orders <span id="pending-count" class="text-blue-400 font-quant">0</span>
+                    </h3>
+                    <div id="pending-list" class="space-y-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                        <!-- Pending items -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UI Interaction Scripts -->
+    <script>
+        const UI = {
+            symbol: 'BTCUSDT',
+            candleSeries: null,
+            chartReady: false,
+            
+            initChart() {
+                const container = document.getElementById('tvchart');
+                const chart = LightweightCharts.createChart(container, {
+                    width: container.clientWidth,
+                    height: 500,
+                    layout: { textColor: '#9ca3af', background: { type: 'solid', color: 'transparent' } },
+                    grid: { vertLines: { color: 'rgba(255,255,255,0.03)' }, horzLines: { color: 'rgba(255,255,255,0.03)' } },
+                    timeScale: { timeVisible: true, borderColor: 'rgba(255,255,255,0.1)' },
+                    rightPriceScale: { borderColor: 'rgba(255,255,255,0.1)' }
+                });
+                this.candleSeries = chart.addSeries(LightweightCharts.CandlestickSeries, {
+                    upColor: '#0ecb81', downColor: '#f6465d', borderVisible: false,
+                    wickUpColor: '#0ecb81', wickDownColor: '#f6465d'
+                });
+                window.addEventListener('resize', () => chart.applyOptions({ width: container.clientWidth }));
+                this.chartReady = true;
+            },
+
+            formatMoney(val) { return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val); },
+
+            async updatePositions() {
+                try {
+                    const res = await fetch('/api/positions?t=' + Date.now());
+                    const data = await res.json();
+                    const container = document.getElementById('position-container');
+                    const posCount = document.getElementById('top-pos-count');
+                    
+                    if (!data.positions || data.positions.length === 0) {
+                        container.innerHTML = '<div class="text-center py-10 text-gray-500 italic text-xs">Không có vị thế đang mở.</div>';
+                        posCount.textContent = "0";
+                        return;
+                    }
+
+                    posCount.textContent = data.positions.length;
+                    container.innerHTML = data.positions.map(p => {
+                        const isProfit = p.unrealizedPnL >= 0;
+                        return `
+                            <div class="glass-card p-4 relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 p-2 text-[8px] font-bold ${p.side === 'LONG' ? 'text-emerald-500' : 'text-red-500'} bg-black/40 rounded-bl-lg tracking-tighter">${p.side} ${p.leverage}X</div>
+                                <div class="flex justify-between items-start mb-2">
+                                    <div class="font-bold text-lg text-slate-100">${p.symbol}</div>
+                                    <div class="text-right">
+                                        <div class="text-[9px] text-slate-500 uppercase font-black tracking-tighter">Unrealized PnL</div>
+                                        <div class="text-base font-bold ${isProfit ? 'neon-text-green' : 'neon-text-red'} font-quant">${this.formatMoney(p.unrealizedPnL)} (${p.roi}%)</div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-[10px] text-slate-400 mb-4 border-t border-white/5 pt-2">
+                                    <div>Entry Price: <span class="text-slate-200 font-quant">${p.entryPrice}</span></div>
+                                    <div class="text-right">Mark Price: <span class="text-slate-200 font-quant">${p.markPrice}</span></div>
+                                </div>
+                                <button onclick="closePosition('${p.symbol}')" class="w-full py-2 bg-red-500/10 hover:bg-red-500/30 text-red-500 text-[10px] font-black tracking-widest uppercase rounded-lg border border-red-500/20 transition-all">Close Position</button>
+                            </div>
+                        `;
+                    }).join('');
+                } catch (e) { console.error("Pos update err:", e); }
+            },
+
+            async updateLogs() {
+                try {
+                    const res = await fetch('/api/logs?t=' + Date.now());
+                    const data = await res.json();
+                    const term = document.getElementById('log-terminal');
+                    if (data.logs) {
+                        term.innerHTML = data.logs.map(l => {
+                            let color = 'text-gray-400';
+                            if (l.includes('ERROR')) color = 'text-red-400';
+                            if (l.includes('WARNING')) color = 'text-yellow-500';
+                            if (l.includes('Binance')) color = 'text-yellow-200';
+                            if (l.includes('🚀') || l.includes('LONG') || l.includes('SHORT')) color = 'text-binance';
+                            
+                            // Highlight timestamps
+                            const line = l.replace(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/, '<span class="text-gray-600">$&</span>');
+                            return `<div class="${color} border-b border-white/3 pb-1.5">${line}</div>`;
+                        }).join('');
+                        term.scrollTop = term.scrollHeight;
+                    }
+                } catch (e) {}
+            },
+
+            async updateAiBrain() {
+                try {
+                    const res = await fetch('/api/ai_brain?t=' + Date.now());
+                    const data = await res.json();
+                    const content = document.getElementById('ai-content');
+                    const tag = document.getElementById('ai-decision-tag');
+                    
+                    if (data && data.report) {
+                        tag.textContent = data.decision;
+                        tag.className = `px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter ${data.decision === 'LONG' ? 'bg-emerald-900/50 text-emerald-400 border border-emerald-500/30' : (data.decision === 'SHORT' ? 'bg-red-900/50 text-red-400 border border-red-500/30' : 'bg-gray-800 text-gray-400')}`;
+                        content.innerHTML = marked.parse(data.report);
+                        
+                        // Sync symbol
+                        if (data.symbol && data.symbol !== this.symbol) {
+                            this.symbol = data.symbol;
+                            document.getElementById('chart-symbol').textContent = this.symbol;
+                            this.updateChart();
+                        }
+                    }
+                } catch (e) {}
+            },
+
+            async updateChart() {
+                if (!this.chartReady) return;
+                try {
+                    const res = await fetch(`/api/chart/${this.symbol}?interval=1h&t=${Date.now()}`);
+                    const data = await res.json();
+                    if (data && data.length > 0) {
+                        this.candleSeries.setData(data);
+                        const last = data[data.length - 1];
+                        document.getElementById('chart-price').textContent = last.close;
+                        const change = ((last.close - last.open) / last.open * 100).toFixed(2);
+                        const el = document.getElementById('chart-change');
+                        el.textContent = (change >= 0 ? '+' : '') + change + '%';
+                        el.className = change >= 0 ? 'text-emerald-400' : 'text-red-400';
+                    }
+                } catch (e) {}
+            }
+        };
+
+        // Command handlers
+        async function closePosition(symbol) {
+            const pin = prompt(`Nhập mã PIN để xác nhận ĐÓNG vị thế ${symbol}:`);
+            if (!pin) return;
+            try {
+                const res = await fetch(`/api/close_position?symbol=${symbol}`, {
+                    method: 'POST',
+                    headers: { 'X-API-KEY': pin }
+                });
+                const r = await res.json();
+                if (r.status === 'success') { alert(`✅ Đã đóng vị thế ${symbol}`); UI.updatePositions(); }
+                else alert("❌ " + r.detail);
+            } catch (e) { alert("❌ Lỗi mạng hoặc PIN sai"); }
+        }
+
+        async function shutdownBot() {
+            if (!confirm("⚠️ TẮT BOT TRIỆT ĐỂ?")) return;
+            const pin = prompt("Mã PIN:");
+            if (!pin) return;
+            const res = await fetch('/api/shutdown', { method: 'POST', headers: { 'X-API-KEY': pin } });
+            if ((await res.json()).status === 'success') location.reload();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            UI.initChart();
+            const tick = () => {
+                UI.updatePositions();
+                UI.updateLogs();
+                UI.updateAiBrain();
+                UI.updateChart();
+            };
+            tick();
+            setInterval(tick, 3000);
+        });
+    </script>
+</body>
+</html>
+

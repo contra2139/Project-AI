@@ -1,29 +1,31 @@
-# Crypto Quant AI Bot 🤖
+# Crypto Quant AI Bot
 
-Bot giao dịch Crypto kết hợp phân tích kỹ thuật (Quant TA) và trí tuệ nhân tạo (Gemini 3.1 Pro).
+Hệ thống giao dịch Futures tự động kết hợp phân tích Lượng tử (Pandas-TA) và AI (Gemini 3.1 Pro).
 
-## 🚀 Tính năng nổi bật
-- **Phân tích đa khung thời gian:** Tự động kéo dữ liệu 4H, 1H, 15m từ Binance Futures.
-- **Quant TA:** Tính toán EMA 34/89/200, RSI, MACD, ADX, Bollinger Bands, ATR.
-- **AI Brain (Gemini 3.1 Pro):** Đưa ra quyết định dựa trên dữ liệu kỹ thuật kết hợp kiến thức mô hình nến của Thomas Bulkowski.
-- **Telegram Control:** Điều khiển bot hoàn toàn qua Telegram với các lệnh linh hoạt.
-- **Web Dashboard:** Theo dõi trực quan biểu đồ nến và log server thời gian thực.
-- **Binance 2026 Ready:** Tương thích hoàn toàn với các thay đổi API mới nhất của Binance (Algo Orders).
+## Project Status: 🚀 Development / Beta Testing (v0.1.6)
 
-## 🛠️ Cài đặt & Chạy
-1. Cài đặt thư viện: `pip install -r requirements.txt`
-2. Cấu hình file `.env` (xem `.env.example`).
-3. Chạy bot: `python main.py`
+Dự án hiện đang trong giai đoạn thử nghiệm tích cực với các tính năng cao cấp.
 
-## 📱 Lệnh Telegram
-- `/scan [SYMBOL]` - AI phân tích xu hướng và đề xuất lệnh.
-- `/trade [SYMBOL] [LONG/SHORT] [ENTRY] [TP]/[SL] [RISK]` - Vào lệnh LIMIT chính xác.
-- `/limit [SYMBOL] [LONG/SHORT] [TRIGGER] [ENTRY] [TP]/[SL] [RISK]` - Đặt lệnh chờ kích hoạt.
-- `/status` - Xem số dư ví Futures và trạng thái bot.
-- `/orders` - Xem các lệnh đang treo trên sàn.
-- `/help` - Xem hướng dẫn chi tiết.
+## Key Features
 
-## 🔒 Bảo mật
-- API Keys được bảo vệ qua biến môi trường.
-- Dashboard được bảo vệ bằng middleware `X-API-KEY`.
-- Bot chỉ nhận lệnh từ đúng `TELEGRAM_CHAT_ID` của chủ nhân.
+- **AI Brain v1.1:** Phân tích MTFA chuyên sâu (4H/1H/15m) tích hợp Market Structure & Liquidity (MSL).
+- **Premium Dashboard:** Giao diện Glassmorphism Dark Matte mượt mà, hỗ trợ PnL tracking realtime.
+- **Multimodal Analysis:** AI phân tích cả dữ liệu số và hình ảnh biểu đồ K-line.
+- **Compliance 2026:** Tương thích hoàn toàn với Binance Futures Algo Order API mới nhất.
+- **Security:** PIN-based Kill Switch, bảo vệ truy cập Dashboard và lệnh đóng vị thế.
+
+## Quick Start
+
+1. Cấu hình file `.env` với API Key Binance và Gemini.
+2. Cài đặt Python 3.10+: `pip install -r crypto_ai_bot/requirements.txt`.
+3. Chạy bot: `python crypto_ai_bot/main.py`.
+4. Truy cập Dashboard: `http://127.0.0.1:8000`.
+
+## Documentation
+
+- [Ideas & Roadmap](docs/ideas.md)
+- [API Endpoints](crypto_ai_bot/docs/api/endpoints.md)
+- [Candlestick Patterns](crypto_ai_bot/docs/strategies/candlestick_patterns.md)
+
+---
+*Gõ `/recap` để AI tóm tắt tiến độ dự án.*

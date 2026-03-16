@@ -1,97 +1,75 @@
 {
-  "updated_at": "2026-03-15T21:00:00Z",
   "working_on": {
-    "feature": "AI Memory Buffer & Interactive Flow Optimization",
-    "task": "Hệ thống đã ổn định sau nâng cấp Phase 8",
-    "status": "completed",
-    "last_run": "2026-03-15T20:50:00Z",
-    "last_run_url": "http://127.0.0.1:8000",
+    "feature": "Documentation & Performance Backtesting",
+    "task": "Session Saving & Handover",
+    "status": "in-progress",
+    "last_run": "2026-03-16T09:40:00Z",
+    "last_run_url": "N/A",
     "files": [
-      "core/telegram_ctrl.py",
-      "core/binance_exec.py",
-      "core/ai_brain.py",
-      "main.py",
-      "web/templates/monitor.html"
+      "USER_GUIDE.md",
+      "LOGIC_DIAGRAM.md",
+      "BACKTEST_REPORT.md",
+      "crypto_ai_bot/backtest.py"
     ]
   },
   "pending_tasks": [
-    {
-      "task": "Implement portfolio PnL tracking UI",
-      "priority": "low"
-    }
+    { "task": "Kiểm thử luồng vào lệnh Market thật trên Binance Testnet", "priority": "high", "notes": "Cần key Testnet riêng trong .env" },
+    { "task": "Fix 'Unclosed client session' on shutdown", "priority": "medium", "notes": "Cần tinh chỉnh lifespan cleanup" },
+    { "task": "Tối ưu API Rate Limit - Binance 1200 req/min", "priority": "medium", "notes": "Thêm delay hoặc caching cho data_ingestion" },
+    { "task": "Add more MSL visualization to Dashboard", "priority": "low" },
+    { "task": "Deploy lên VPS (Docker hoặc systemd service)", "priority": "low" }
   ],
   "recent_changes": [
     {
-      "timestamp": "2026-03-15T20:35:00Z",
-      "type": "bugfix",
-      "description": "Fixed Binance Error -4509: Changed TP/SL for LIMIT entries from closePosition=True to quantity + reduceOnly=True",
-      "files": ["core/binance_exec.py"]
+      "timestamp": "2026-03-16T09:45:00Z",
+      "type": "docs",
+      "description": "Created comprehensive system documentation including USER_GUIDE.md (Model Mechanics) and LOGIC_DIAGRAM.md (Mermaid Flowchart).",
+      "files": ["USER_GUIDE.md", "LOGIC_DIAGRAM.md"]
     },
     {
-      "timestamp": "2026-03-15T20:30:00Z",
-      "type": "bugfix",
-      "description": "Fixed ValueError in price parsing: Added safe_extract_price helper to handle AI range strings (e.g. 100-105)",
-      "files": ["core/telegram_ctrl.py", "core/ai_brain.py"]
-    },
-    {
-      "timestamp": "2026-03-15T20:15:00Z",
-      "type": "security",
-      "description": "Implemented PIN-based Kill Switch security (default 123456) in .env and Web UI",
-      "files": ["main.py", "config.py", ".env", "web/templates/monitor.html"]
-    },
-    {
-      "timestamp": "2026-03-15T20:00:00Z",
+      "timestamp": "2026-03-16T09:30:00Z",
       "type": "feature",
-      "description": "Implemented AI Memory Lifecycle: 60-min freshness TTL and automatic GC (24h/50-item limit)",
-      "files": ["core/telegram_ctrl.py"]
+      "description": "Implemented Historical Backtesting Engine (backtest.py) and generated BACKTEST_REPORT.md showing +6.93% ROI over 500 candles.",
+      "files": ["crypto_ai_bot/backtest.py", "BACKTEST_REPORT.md"]
     },
     {
-      "timestamp": "2026-03-15T19:45:00Z",
-      "type": "feature",
-      "description": "Implemented Interactive Shortcut Flow (LLL/SSS) with auto-analysis and trend confluence warnings",
-      "files": ["core/telegram_ctrl.py"]
+      "timestamp": "2026-03-16T08:25:00Z",
+      "type": "fix",
+      "description": "Resolved 'Unclosed client session' errors by implementing a multi-stage async cleanup with a 0.5s grace period in lifespan.",
+      "files": ["main.py", "core/telegram_ctrl.py"]
     },
     {
-      "timestamp": "2026-03-15T19:30:00Z",
+      "timestamp": "2026-03-16T08:20:00Z",
+      "type": "maintenance",
+      "description": "Consolidated dual .brain directories into a single root source of truth and updated all documentation.",
+      "files": [".brain/brain.json", ".brain/session.json", "README.md", "CHANGELOG.md"]
+    },
+    {
+      "timestamp": "2026-03-15T23:30:00Z",
       "type": "feature",
-      "description": "Added Persistent AI Memory (ai_memory.json) for cross-symbol analysis caching",
-      "files": ["core/telegram_ctrl.py"]
+      "description": "Added Portfolio PnL & ROI Tracking components with real-time updates and Close Position support.",
+      "files": ["main.py", "core/binance_exec.py", "web/templates/monitor.html"]
+    },
+    {
+      "timestamp": "2026-03-15T23:00:00Z",
+      "type": "feature",
+      "description": "Integrated Market Structure & Liquidity (MSL) Analyzer (BOS, CHoCH, FVG) into AI Brain logic.",
+      "files": ["core/msl_analyzer.py", "core/ai_brain.py"]
+    },
+    {
+      "timestamp": "2026-03-14T10:48:00Z",
+      "type": "feature",
+      "description": "Nâng cấp AI Brain v1.1: System Prompt MTFA chuyên sâu với Magnet, Whipsaw, Confluence.",
+      "files": ["core/ai_brain.py"]
     }
   ],
   "errors_encountered": [
-    {
-      "error": "ValueError: could not convert string to float: '651.60 - 646.50'",
-      "solution": "Created safe_extract_price and tightened AI prompt to forbid ranges",
-      "resolved": true
-    },
-    {
-      "error": "APIError(code=-4509): Time in Force (TIF) GTE can only be used with open positions",
-      "solution": "Switched from closePosition=True to quantity + reduceOnly=True for pending LIMIT orders",
-      "resolved": true
-    },
-    {
-      "error": "NameError: name 'logger' is not defined (telegram_ctrl.py)",
-      "solution": "Restored logger = logging.getLogger(__name__) after refactor",
-      "resolved": true
-    },
-    {
-      "error": "Telegram TimedOut: analysis taking > 10s",
-      "solution": "Increased HTTPXRequest timeouts to 30s in telegram_ctrl.py builder",
-      "resolved": true
-    }
+    { "error": "Unclosed client session / Unclosed connector", "solution": "Implemented multi-stage cleanup (Telegram -> Binance) with a 0.5s grace period in lifespan.", "resolved": true },
+    { "error": "ValueError: AI may return price ranges", "solution": "Safe average extraction for price strings", "resolved": true }
   ],
   "decisions_made": [
-    {
-      "decision": "Use account-wide PIN for kill switch",
-      "reason": "API Key is too long and inconvenient for mobile/quick access; PIN 123456 is faster"
-    },
-    {
-      "decision": "Auto-expire AI analysis after 60 minutes",
-      "reason": "Market conditions change quickly; old TP/SL data from 2 hours ago is dangerous"
-    },
-    {
-      "decision": "Calculate Mean for AI ranges",
-      "reason": "If AI returns 100-105, 102.5 is a safe representative point for order placement"
-    }
+    { "decision": "Switch background to #08090a neutrality", "reason": "Vibrant gradients were causing eye strain" },
+    { "decision": "Use Outfit font for headings", "reason": "Improves professional aesthetic and readability" },
+    { "decision": "Centralize .brain at project root", "reason": "Avoid context duplication and recap errors" }
   ]
 }
