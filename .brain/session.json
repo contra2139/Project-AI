@@ -21,6 +21,12 @@
   ],
   "recent_changes": [
     {
+      "timestamp": "2026-03-16T10:05:00Z",
+      "type": "maintenance",
+      "description": "Consolidated Git repository to root and pushed all project segments (Code + Docs) to GitHub.",
+      "files": [".git", ".gitignore", "GIT_GUIDE.md"]
+    },
+    {
       "timestamp": "2026-03-16T09:45:00Z",
       "type": "docs",
       "description": "Created comprehensive system documentation including USER_GUIDE.md (Model Mechanics) and LOGIC_DIAGRAM.md (Mermaid Flowchart).",

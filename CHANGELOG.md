@@ -6,7 +6,8 @@
 - **Portfolio PnL Tracking:** Hiển thị vị thế đang mở, PnL và ROI thời gian thực trên Dashboard.
 - **Dark Matte Comfort Theme:** Giao diện tối ưu cho mắt, sử dụng font Outfit và neutral background.
 - **Historical Backtest Engine:** Mô phỏng chiến lược EMA+RSI trên dữ liệu quá khứ.
-- **System Documentation:** Cẩm nang `USER_GUIDE.md` và `LOGIC_DIAGRAM.md`.
+- **System Documentation:** Cẩm nang `USER_GUIDE.md`, `LOGIC_DIAGRAM.md` và `GIT_GUIDE.md`.
+- **Git Consolidation:** Hợp nhất Git vào thư mục gốc và cấu hình GitHub Remote.
 - **Migration SDK:** Chuyển sang `google.genai` v1.60.0 mới nhất.
 - **Close Position API:** Cho phép đóng lệnh nhanh bằng mã PIN từ Dashboard.
 

@@ -8,9 +8,8 @@
 ✅ ĐÃ XONG (Phiên này):
    - Xây dựng file `backtest.py` mô phỏng chiến lược EMA 34/89 + RSI.
    - Chạy mô phỏng trên 500 nến 1H cho BTC, ETH, SOL -> ROI TỔNG +6.93%.
-   - Lập báo cáo chi tiết `BACKTEST_REPORT.md`.
-   - Viết cẩm nang người dùng `USER_GUIDE.md` (giải thích Hybrid Quant-AI).
-   - Thiết kế sơ đồ logic `LOGIC_DIAGRAM.md` bằng Mermaid.
+   - Tài liệu kỹ thuật: `USER_GUIDE.md`, `LOGIC_DIAGRAM.md`, `GIT_GUIDE.md`.
+   - **GitHub Backup:** Hợp nhất Git Repo tại thư mục gốc và đẩy lên `contra2139/Project-AI`.
    - (Phiên trước): Hợp nhất `.brain`, Fix lỗi unclosed connector.
 
 ⏳ CÒN LẠI:

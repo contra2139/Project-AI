@@ -50,7 +50,8 @@
     "Interactive Shortcut Flow (LLL/SSS) with auto-analysis and trend confluence check",
     "Robust Value Parsing (Safe average for AI range price strings)",
     "Historical Backtesting Engine (backtest.py for Strategy Simulation & ROI Calculation)",
-    "Comprehensive System Documentation (USER_GUIDE.md, LOGIC_DIAGRAM.md, BACKTEST_REPORT.md)"
+    "Comprehensive System Documentation (USER_GUIDE.md, LOGIC_DIAGRAM.md, BACKTEST_REPORT.md, GIT_GUIDE.md)",
+    "Consolidated Git Repository at Root Level (Binance_price)"
   ],
   "api_endpoints": [
     { "path": "/", "method": "GET", "auth": false, "explained": "Giao diện Dashboard monitor.html (Glassmorphism)" },
