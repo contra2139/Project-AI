@@ -30,6 +30,11 @@
       "type": "NoSQL (File-based JSON)",
       "storage": "logs/latest_ai.json",
       "buffer": "logs/ai_memory.json (Persistent per-symbol cache)"
+    },
+    "version_control": {
+      "type": "Git",
+      "remote": "https://github.com/contra2139/Project-AI",
+      "branch": "master"
     }
   },
   "features": [
