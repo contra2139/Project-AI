@@ -1,0 +1,19 @@
+========================================
+CBX BACKTEST RESULTS - SOLUSDC
+Run: Backtest Run
+Period: 2024-01-01 00:00:00 -> 2026-02-28 00:00:00
+========================================
+Trades:    205 (101W / 104L)
+Win Rate:  49.3%
+Total PnL: +44.17R  ($+5)
+Max DD:    -7.62R
+PF:        1.45
+--------------------
+Exit breakdown:
+Trailing stop hit: 96 (47%)
+Time stop: 30 bars without 0.80R: 10 (5%)
+Stop loss hit  : 95 (46%)
+Zone floor breached: 4 (2%)
+========================================
+
+--- Long/Short Breakdown ---

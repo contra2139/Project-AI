@@ -1,0 +1,17 @@
+========================================
+CBX BACKTEST RESULTS - BNBUSDC
+Run: Backtest Run
+Period: 2024-03-01 00:00:00 -> 2025-03-01 00:00:00
+========================================
+Trades:    11 (5W / 6L)
+Win Rate:  45.5%
+Total PnL: +1.15R  ($-410)
+Max DD:    -3.59R
+PF:        1.20
+--------------------
+Exit breakdown:
+Trailing stop hit: 4 (36%)
+Stop loss hit  : 5 (45%)
+Time stop: 30 bars without 0.80R: 1 (9%)
+Zone ceiling breached: 1 (9%)
+========================================

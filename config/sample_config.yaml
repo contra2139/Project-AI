@@ -1,0 +1,66 @@
+# CBX Strategy Configuration
+# Version: 1.0
+
+global:
+  exchange: "binance"
+  test_mode: true
+  log_level: "INFO"
+  database:
+    type: "postgresql"
+    host: "localhost"
+    port: 5432
+    dbname: "cbx_trading"
+
+risk:
+  risk_per_trade_pct: 0.25
+  max_positions_per_symbol: 1
+  max_total_positions: 2
+  daily_stop_r: -2.0
+  consecutive_failure_limit: 3
+
+symbols:
+  BTCUSDC:
+    enabled: true
+    execution_tf: "15m"
+    context_tf: "1h"
+    compression:
+      atr_percentile_threshold: 20
+      range_percentile_threshold: 20
+      bb_width_percentile_threshold: 20
+      volume_percentile_threshold: 60
+      min_bars: 8
+      max_bars: 24
+      min_conditions: 3
+    breakout:
+      distance_min_atr: 0.20
+      body_ratio_min: 0.60
+      volume_ratio_min: 1.30
+      max_bar_size_atr: 2.5
+    exit:
+      partial_tp_r: 1.0
+      partial_pct: 50
+      time_stop_bars: 8
+      trailing_stop_atr: 1.5
+
+  SOLUSDC:
+    enabled: true
+    execution_tf: "15m"
+    context_tf: "1h"
+    compression:
+      atr_percentile_threshold: 15 # Tighter for SOL
+      range_percentile_threshold: 20
+      bb_width_percentile_threshold: 20
+      volume_percentile_threshold: 60
+      min_bars: 8
+      max_bars: 24
+      min_conditions: 3
+    breakout:
+      distance_min_atr: 0.25
+      body_ratio_min: 0.65
+      volume_ratio_min: 1.5
+      max_bar_size_atr: 2.5
+    exit:
+      partial_tp_r: 1.2 # Higher target for SOL
+      partial_pct: 50
+      time_stop_bars: 10
+      trailing_stop_atr: 2.0

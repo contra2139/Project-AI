@@ -1,0 +1,27 @@
+========================================
+CBX BACKTEST RESULTS - BTCUSDC
+Run: Backtest Run
+Period: 2024-03-01 00:00:00 -> 2025-03-01 00:00:00
+========================================
+Trades:    113 (41W / 72L)
+Win Rate:  36.3%
+Total PnL: -30.15R  ($-1095)
+Max DD:    0.00R
+PF:        0.40
+--------------------
+Exit breakdown:
+Stop loss hit  : 39 (35%)
+Time stop reached at 8 bars without 1R: 60 (53%)
+Time stop reached at 128 bars without 1R: 1 (1%)
+Time stop reached at 9 bars without 1R: 2 (2%)
+Time stop reached at 3674 bars without 1R: 1 (1%)
+Time stop reached at 11 bars without 1R: 1 (1%)
+Time stop reached at 167 bars without 1R: 1 (1%)
+Time stop reached at 10 bars without 1R: 2 (2%)
+Time stop reached at 526 bars without 1R: 1 (1%)
+Time stop reached at 12 bars without 1R: 1 (1%)
+Time stop reached at 13 bars without 1R: 1 (1%)
+Time stop reached at 25 bars without 1R: 1 (1%)
+Time stop reached at 14 bars without 1R: 1 (1%)
+Time stop reached at 66 bars without 1R: 1 (1%)
+========================================

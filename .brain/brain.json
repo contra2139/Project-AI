@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "schema_version": "1.1.0",
+    "awf_version": "3.3.0",
+    "last_updated": "2026-03-20T21:00:00Z"
+  },
+  "project": {
+    "name": "CBX Strategy V1",
+    "type": "Crypto Trading Bot",
+    "status": "V7 Strategy Validated (2024-2026 Comprehensive Backtest + Full Audit Passed)"
+  },
+  "tech_stack": {
+    "backend": {
+      "framework": "FastAPI",
+      "auth": "JWT (Hardened), HTTP-only Cookies",
+      "notification": "WebSocket, Telegram Bot API",
+      "testing": "pytest, verify_security.py, walk_forward.py",
+      "deployment": "Docker (Python 3.11-slim)",
+      "health_monitoring": "Detailed /health endpoint",
+      "libraries": ["python-binance", "loguru", "python-telegram-bot", "aiosqlite", "SQLAlchemy 2.0+"]
+    },
+    "frontend": {
+      "framework": "Next.js 14",
+      "styling": "Tailwind CSS",
+      "state_management": "Zustand, React Query",
+      "api_client": "Axios with Interceptors + Next.js API Proxy",
+      "charts": ["lightweight-charts v5.1.0+", "recharts"],
+      "deployment": "Docker (Standalone Mode)"
+    },
+    "database": {
+      "type": "PostgreSQL (Prod), SQLite (Research)",
+      "orm": "SQLAlchemy (Backend), aiosqlite (Local tests & Backtest Engine)",
+      "notations": "Added Multi-Condition Context Filter columns (slope, price_vs_ema) to symbol_strategy_config."
+    },
+    "infrastructure": {
+      "proxy": "Nginx (Reverse Proxy, SSL, Rate Limiting, IP Whitelisting)",
+      "orchestration": "Docker Compose",
+      "networking": "Internal cbx_internal bridge",
+      "cache": "Redis (Fail-hard in Production, Mock for Non-Prod)"
+    }
+  },
+  "api_endpoints": [
+    { "path": "/api/v1/auth/login", "explained": "Backend login with 32-char secret enforcement" },
+    { "path": "/api/v1/auth/refresh", "explained": "Backend token refresh" },
+    { "path": "/api/v1/log/frontend-error", "explained": "Frontend error reporting to Telegram with rate limiting" },
+    { "path": "/api/v1/signals", "explained": "Breakout signal retrieval" },
+    { "path": "/api/v1/trades", "explained": "Trade history and performance metrics" },
+    { "path": "/health", "explained": "Production health check endpoint" }
+  ],
+  "features": [
+    "Strategy V7 Engine: Long-term validated Multi-Condition Context Filter",
+    "Robust Walk-Forward Analysis: Negative PnL overfitting guard",
+    "Secure Dashboard Layout (Binance-inspired Dark Theme)",
+    "Real-time WebSocket Notifications with auto-reconnect",
+    "Production Ready Infrastructure: Docker Compose, Nginx, SSL, IP Whitelisting",
+    "Hardened Security: Mandatory 32-char JWT secret, SQL Whitelisting, API Permission Auditing",
+    "Telegram Control Bot with AI Gemini Assistant integration",
+    "Comprehensive User Guide (docs/user_guide_v7.md)"
+  ],
+  "strategy_v7": {
+    "logic": [
+      "Compression Detector: Minimum 8 bars, Bottom 30% ATR/Range/BB-Width",
+      "Context Filter: LONG blocked only if price < EMA and slope < 0 (BOTH must be bad)",
+      "Trailing Stop: Ratchet logic (Tighter of 2-bar low/high vs 1.5 ATR floor)",
+      "Risk Management: 0.25% risk per trade, Notional-based fee calculation (0.05% taker/maker)"
+    ],
+    "results_2024_2026": [
+      "BTCUSDC: +43R Profit",
+      "BNBUSDC: +52R Profit",
+      "SOLUSDC: +67R Profit"
+    ]
+  }
+}
